@@ -112,4 +112,8 @@ select {
     flex-direction: column;
     gap: 0;
   }
+
+  select {
+    background-color: #fff !important;
+  }
 }
