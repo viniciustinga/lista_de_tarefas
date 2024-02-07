@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Todo from './components/Todo';
 import TodoForm from './components/TodoForm';
 import Search from './components/Search';
@@ -31,6 +31,11 @@ function App() {
   const [filter, setFilter] = useState("All");
   const [sort, setSort] = useState("Asc");
 
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("todo"));
+    if ( data !== null) setTodos(data)
+  }, [])
+
   const addTodo = (text, category) => {
     const newTodos = [
       ...todos,
@@ -41,7 +46,9 @@ function App() {
         isCompleted: false
       }
     ];
-    setTodos(newTodos);
+    localStorage.setItem("todo", JSON.stringify(newTodos));
+    const getTodo = JSON.parse(localStorage.getItem("todo")); 
+    setTodos(getTodo);
   };
 
   const removeTodo = (id) => {
@@ -49,7 +56,9 @@ function App() {
     const filteredTodos = newTodos.filter((todo) =>
      todo.id !== id ? todo : null
     );
-    setTodos(filteredTodos);
+    localStorage.setItem("todo", JSON.stringify(filteredTodos));
+    const getTodo = JSON.parse(localStorage.getItem("todo")); 
+    setTodos(getTodo);
   };
 
   const completeTodo = (id) => {
